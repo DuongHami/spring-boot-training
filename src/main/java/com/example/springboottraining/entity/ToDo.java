@@ -13,23 +13,23 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "todo")
+@Table(name = "to_do")
 public class ToDo {
     @Id
-    @Column(name = "id", nullable = false)
+//    @Column(name = "id", nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "taskname", nullable = false)
+//    @Column(name = "taskname", nullable = false)
     private String taskname;
 
-    @Column(name = "description")
+//    @Column(name = "description")
     private String description;
 
-    @Column(name = "duedate")
-    private Date dueDate;
+////    @Column(name = "duedate")
+//    private Date dueDate;
 
-    @Column(name = "compleated")
+//    @Column(name = "compleated")
     private Boolean compleated;
 
 }
