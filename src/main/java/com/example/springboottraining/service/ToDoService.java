@@ -12,6 +12,6 @@ public interface ToDoService {
     List<ToDo> getAllToDo();
     List<ToDo> getFinishedToDo();
     List<ToDo> getOpenToDo();
-    Integer getNumOfOpenToDo();
-    Integer getNumOfFinishedToDo();
+    Long getNumOfOpenToDo();
+    Long getNumOfFinishedToDo();
 }

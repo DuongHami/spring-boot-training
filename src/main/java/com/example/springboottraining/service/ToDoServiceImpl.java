@@ -4,7 +4,6 @@ import com.example.springboottraining.entity.ToDo;
 import com.example.springboottraining.repository.ToDoRepository;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import lombok.Setter;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -23,11 +22,14 @@ public class ToDoServiceImpl implements ToDoService{
 
     @Override
     public void updateToDo(ToDo obj) {
-        ToDo newObj = this.getToDoRepository().findById(obj.getId()).get();
-        newObj.setTaskname(obj.getTaskname());
-        newObj.setDescription(obj.getDescription());
-        newObj.setCompleated(obj.getCompleated());
-        this.getToDoRepository().save(obj);
+        if(this.getToDoRepository().existsById(obj.getId())){
+            ToDo newToDo = this.getToDoRepository().findById(obj.getId()).get();
+            newToDo.setCompleted(obj.getCompleted());
+            newToDo.setTaskname(obj.getTaskname());
+            newToDo.setDescription(obj.getDescription());
+            newToDo.setId(obj.getId());
+            this.getToDoRepository().save(newToDo);
+        }
     }
 
     @Override
@@ -42,21 +44,21 @@ public class ToDoServiceImpl implements ToDoService{
 
     @Override
     public List<ToDo> getFinishedToDo() {
-        return (List<ToDo>) this.getToDoRepository().findByCompleated(true);
+        return this.getToDoRepository().findByCompleted(true);
     }
 
     @Override
     public List<ToDo> getOpenToDo() {
-        return (List<ToDo>) this.getToDoRepository().findByCompleated(false);
+        return this.getToDoRepository().findByCompleted(false);
     }
 
     @Override
-    public Integer getNumOfOpenToDo() {
-        return (Integer)((List<ToDo>) this.getToDoRepository().findByCompleated(false)).size();
+    public Long getNumOfOpenToDo() {
+        return this.getToDoRepository().countAllByCompletedIsFalse();
     }
 
     @Override
-    public Integer getNumOfFinishedToDo() {
-        return (Integer)((List<ToDo>) this.getToDoRepository().findByCompleated(true)).size();
+    public Long getNumOfFinishedToDo() {
+        return this.getToDoRepository().countAllByCompletedIsTrue();
     }
 }

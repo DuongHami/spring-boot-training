@@ -30,6 +30,6 @@ public class ToDo {
 //    private Date dueDate;
 
 //    @Column(name = "compleated")
-    private Boolean compleated;
+    private Boolean completed;
 
 }

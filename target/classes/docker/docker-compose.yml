@@ -1,0 +1,35 @@
+version: "3.7"
+services:
+  todo-database-postgres:
+    image: postgres:latest
+    container_name: todo-database-postgres
+    ports:
+      - 5432:5432
+    environment:
+      TZ: Europe/Berlin
+      POSTGRES_USER: todo-user
+      POSTGRES_PASSWORD: todo-password
+      POSTGRES_DB: todo
+    deploy:
+      resources:
+        reservations:
+          memory: 25M
+        limits:
+#          cpus: '0.001'
+          memory: 50M
+    restart: always
+
+#  todo-database-mysql:
+#    image: mysql:latest
+#    container_name: todo-database-mysql
+#    command: --default-authentication-plugin=mysql_native_password
+#    ports:
+#      - 3306:3306
+#    environment:
+#      TZ: Europe/Berlin
+#      MYSQL_ROOT_USER: root-user
+#      MYSQL_ROOT_PASSWORD: root-password
+#      MYSQL_DATABASE: todo
+#      MYSQL_USER: todo-user
+#      MYSQL_PASSWORD: todo-password
+#    restart: always
