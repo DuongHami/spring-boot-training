@@ -8,6 +8,7 @@ import com.example.springboottraining.service.ToDoServiceImpl;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.Getter;
+import org.modelmapper.ModelMapper;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,6 +21,7 @@ import java.util.List;
 public class ToDoController {
 
     private final ToDoServiceImpl toDoServiceImpl;
+    private final ModelMapper modelMapper;
 
     /**
      * Create a ToDo
@@ -27,7 +29,7 @@ public class ToDoController {
      */
     @PostMapping
     public void postToDO(@Valid @RequestBody ToDoCreateDTO newToDo){
-        this.getToDoServiceImpl().createToDo(new ToDo(null, newToDo.getTaskname(), newToDo.getDescription(), false));
+        this.getToDoServiceImpl().createToDo(this.getModelMapper().map(newToDo, ToDo.class));
     }
 
     /**
@@ -35,8 +37,7 @@ public class ToDoController {
      */
     @PutMapping
     public void putToDo(@Valid @RequestBody ToDoUpdateDTO newToDo){
-        this.getToDoServiceImpl().updateToDo(
-                new ToDo(newToDo.getId(), newToDo.getTaskname(), newToDo.getDescription(), newToDo.getCompleted())
+        this.getToDoServiceImpl().updateToDo(this.getModelMapper().map(newToDo, ToDo.class)
         );
     }
 
@@ -45,7 +46,7 @@ public class ToDoController {
      */
     @DeleteMapping
     public void deleteToDo(@Valid @RequestBody ToDoDeleteDTO newToDo){
-        this.getToDoServiceImpl().deleteToDo(new ToDo(newToDo.getId(), newToDo.getTaskname(), newToDo.getDescription(), newToDo.getCompleted()));
+        this.getToDoServiceImpl().deleteToDo(this.getModelMapper().map(newToDo, ToDo.class));
     }
 
     @DeleteMapping("/{id}")
@@ -87,14 +88,4 @@ public class ToDoController {
     public Long getNumOfOpenTodo(){
         return this.getToDoServiceImpl().getNumOfOpenToDo();
     }
-//
-//    @GetMapping("/{num}")
-//    public String helloWithNum(@PathVariable("num") Integer num){
-//        return "Hello " + num;
-//    }
-
-//    @DeleteMapping("/{id}")
-//    public void deleteToDo(@PathVariable("id") Long id){
-//        getToDoServiceImpl().deleteToDo(id);
-//    }
 }
