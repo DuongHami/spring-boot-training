@@ -1,7 +1,11 @@
 package com.example.springboottraining.controller;
 
+import com.example.springboottraining.dto.ToDoCreateDTO;
+import com.example.springboottraining.dto.ToDoDeleteDTO;
+import com.example.springboottraining.dto.ToDoUpdateDTO;
 import com.example.springboottraining.entity.ToDo;
 import com.example.springboottraining.service.ToDoServiceImpl;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.Getter;
 import org.springframework.http.MediaType;
@@ -22,24 +26,31 @@ public class ToDoController {
      * @param newToDo the ToDo object to be created
      */
     @PostMapping
-    public void postToDO(@RequestBody ToDo newToDo){
-        this.getToDoServiceImpl().createToDo(newToDo);
+    public void postToDO(@Valid @RequestBody ToDoCreateDTO newToDo){
+        this.getToDoServiceImpl().createToDo(new ToDo(null, newToDo.getTaskname(), newToDo.getDescription(), false));
     }
 
     /**
      * Update a ToDo
      */
     @PutMapping
-    public void putToDo(@RequestBody ToDo newToDo){
-        this.getToDoServiceImpl().updateToDo(newToDo);
+    public void putToDo(@Valid @RequestBody ToDoUpdateDTO newToDo){
+        this.getToDoServiceImpl().updateToDo(
+                new ToDo(newToDo.getId(), newToDo.getTaskname(), newToDo.getDescription(), newToDo.getCompleted())
+        );
     }
 
     /**
      * Delete a ToDo
      */
     @DeleteMapping
-    public void deleteToDo(@RequestBody ToDo newToDo){
-        this.getToDoServiceImpl().deleteToDo(newToDo);
+    public void deleteToDo(@Valid @RequestBody ToDoDeleteDTO newToDo){
+        this.getToDoServiceImpl().deleteToDo(new ToDo(newToDo.getId(), newToDo.getTaskname(), newToDo.getDescription(), newToDo.getCompleted()));
+    }
+
+    @DeleteMapping("/{id}")
+    public void deleteToDoById(@PathVariable Long id){
+        this.getToDoServiceImpl().deleteToDoById(id);
     }
 
     @GetMapping("/{id}")

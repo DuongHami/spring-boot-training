@@ -10,6 +10,7 @@ public interface ToDoService {
     void createToDo(ToDo obj);
     void updateToDo(ToDo obj);
     void deleteToDo(ToDo obj);
+    void deleteToDoById(Long id);
     List<ToDo> getAllToDo();
     List<ToDo> getFinishedToDo();
     List<ToDo> getOpenToDo();

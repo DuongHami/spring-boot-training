@@ -39,6 +39,11 @@ public class ToDoServiceImpl implements ToDoService{
     }
 
     @Override
+    public void deleteToDoById(Long id){
+        this.getToDoRepository().deleteById(id);
+    }
+
+    @Override
     public ToDo getToDoById(Long id){
         if(this.getToDoRepository().existsById(id)){
             return this.getToDoRepository().findById(id).orElse(null);
