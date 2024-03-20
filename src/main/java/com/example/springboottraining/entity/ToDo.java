@@ -16,7 +16,7 @@ import java.util.Date;
 @Table(name = "to_do")
 public class ToDo {
     @Id
-//    @Column(name = "id", nullable = false)
+    @Column(nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
