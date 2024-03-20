@@ -6,6 +6,7 @@ import java.util.List;
 
 public interface ToDoService {
 
+    ToDo getToDoById(Long id);
     void createToDo(ToDo obj);
     void updateToDo(ToDo obj);
     void deleteToDo(ToDo obj);

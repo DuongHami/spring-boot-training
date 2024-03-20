@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Getter
@@ -35,6 +36,14 @@ public class ToDoServiceImpl implements ToDoService{
     @Override
     public void deleteToDo(ToDo obj) {
         this.getToDoRepository().delete(obj);
+    }
+
+    @Override
+    public ToDo getToDoById(Long id){
+        if(this.getToDoRepository().existsById(id)){
+            return this.getToDoRepository().findById(id).orElse(null);
+        }
+        return null;
     }
 
     @Override

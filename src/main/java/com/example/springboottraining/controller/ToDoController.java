@@ -21,7 +21,7 @@ public class ToDoController {
      * Create a ToDo
      * @param newToDo the ToDo object to be created
      */
-    @PostMapping(consumes = "application/json")
+    @PostMapping
     public void postToDO(@RequestBody ToDo newToDo){
         this.getToDoServiceImpl().createToDo(newToDo);
     }
@@ -40,6 +40,11 @@ public class ToDoController {
     @DeleteMapping
     public void deleteToDo(@RequestBody ToDo newToDo){
         this.getToDoServiceImpl().deleteToDo(newToDo);
+    }
+
+    @GetMapping("/{id}")
+    public ToDo getToDoById(@PathVariable Long id){
+        return this.getToDoServiceImpl().getToDoById(id);
     }
 
     /**

@@ -33,18 +33,18 @@ public class DatabasePopulator implements CommandLineRunner {
 
         this.getToDoRepository().saveAll(Arrays.asList(t1, t2, t3, t4, t5));
 
-        ToDoServiceImpl imp = new ToDoServiceImpl(this.getToDoRepository());
-        imp.createToDo(t6);
-
-        imp.updateToDo(t3new);
-        imp.deleteToDo(t4trash);
-
-        List<ToDo> all = imp.getAllToDo();
-        List<ToDo> finished = imp.getFinishedToDo();
-        List<ToDo> open = imp.getOpenToDo();
-
-        Long numFinished = imp.getNumOfFinishedToDo();
-        Long numOpen = imp.getNumOfOpenToDo();
+//        ToDoServiceImpl imp = new ToDoServiceImpl(this.getToDoRepository());
+//        imp.createToDo(t6);
+//
+//        imp.updateToDo(t3new);
+//        imp.deleteToDo(t4trash);
+//
+//        List<ToDo> all = imp.getAllToDo();
+//        List<ToDo> finished = imp.getFinishedToDo();
+//        List<ToDo> open = imp.getOpenToDo();
+//
+//        Long numFinished = imp.getNumOfFinishedToDo();
+//        Long numOpen = imp.getNumOfOpenToDo();
 
 
 
