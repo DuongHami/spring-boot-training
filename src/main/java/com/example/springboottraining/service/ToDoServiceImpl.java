@@ -1,12 +1,17 @@
 package com.example.springboottraining.service;
 
 import com.example.springboottraining.entity.ToDo;
+import com.example.springboottraining.exception.ToDoNotFoundException;
 import com.example.springboottraining.repository.ToDoRepository;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.Optional;
 
 @Service
@@ -15,6 +20,7 @@ import java.util.Optional;
 public class ToDoServiceImpl implements ToDoService{
 
     private final ToDoRepository toDoRepository;
+//    private final MessageSource messageSource;
 
     @Override
     public void createToDo(ToDo obj) {
@@ -45,10 +51,17 @@ public class ToDoServiceImpl implements ToDoService{
 
     @Override
     public ToDo getToDoById(Long id){
-        if(this.getToDoRepository().existsById(id)){
-            return this.getToDoRepository().findById(id).orElse(null);
-        }
-        return null;
+//        if(this.getToDoRepository().existsById(id)){
+//            return this.getToDoRepository().findById(id).orElse(null);
+//        }
+//        return null;
+//        return this.getToDoRepository().findById(id).orElseThrow(
+//                () -> new EntityNotFoundException(String.format("ToDo with the id %d could not be found", id))
+//        );
+
+        return this.getToDoRepository().findById(id).orElseThrow(
+                () -> new ToDoNotFoundException("")
+        );
     }
 
     @Override

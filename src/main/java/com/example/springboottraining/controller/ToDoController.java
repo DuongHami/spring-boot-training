@@ -9,7 +9,9 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.Getter;
 import org.modelmapper.ModelMapper;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -28,35 +30,38 @@ public class ToDoController {
      * @param newToDo the ToDo object to be created
      */
     @PostMapping
-    public void postToDO(@Valid @RequestBody ToDoCreateDTO newToDo){
+    public ResponseEntity<Object> postToDO(@Valid @RequestBody ToDoCreateDTO newToDo){
         this.getToDoServiceImpl().createToDo(this.getModelMapper().map(newToDo, ToDo.class));
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     /**
      * Update a ToDo
      */
     @PutMapping
-    public void putToDo(@Valid @RequestBody ToDoUpdateDTO newToDo){
-        this.getToDoServiceImpl().updateToDo(this.getModelMapper().map(newToDo, ToDo.class)
-        );
+    public ResponseEntity<Object> putToDo(@Valid @RequestBody ToDoUpdateDTO newToDo){
+        this.getToDoServiceImpl().updateToDo(this.getModelMapper().map(newToDo, ToDo.class));
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     /**
      * Delete a ToDo
      */
     @DeleteMapping
-    public void deleteToDo(@Valid @RequestBody ToDoDeleteDTO newToDo){
+    public ResponseEntity<Void> deleteToDo(@Valid @RequestBody ToDoDeleteDTO newToDo){
         this.getToDoServiceImpl().deleteToDo(this.getModelMapper().map(newToDo, ToDo.class));
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @DeleteMapping("/{id}")
-    public void deleteToDoById(@PathVariable Long id){
+    public ResponseEntity<Void> deleteToDoById(@PathVariable Long id){
         this.getToDoServiceImpl().deleteToDoById(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @GetMapping("/{id}")
-    public ToDo getToDoById(@PathVariable Long id){
-        return this.getToDoServiceImpl().getToDoById(id);
+    public ResponseEntity<ToDo> getToDoById(@PathVariable Long id){
+        return new ResponseEntity<>(this.getToDoServiceImpl().getToDoById(id), HttpStatus.OK);
     }
 
     /**
@@ -64,28 +69,32 @@ public class ToDoController {
      * @return
      */
     @GetMapping(value = "/all")
-    public List<ToDo> getAllTodo(){
-        return this.getToDoServiceImpl().getAllToDo();
+    public ResponseEntity<List<ToDo>> getAllTodo(){
+//        return this.getToDoServiceImpl().getAllToDo();
+        return new ResponseEntity<>(this.getToDoServiceImpl().getAllToDo(), HttpStatus.OK);
     }
 
 
     @GetMapping(path = "/finished")
-    public List<ToDo> getAllFinishedTodo(){
-        return this.getToDoServiceImpl().getFinishedToDo();
+    public ResponseEntity<List<ToDo>> getAllFinishedTodo(){
+//        return this.getToDoServiceImpl().getFinishedToDo();
+        return new ResponseEntity<>(this.getToDoServiceImpl().getFinishedToDo(), HttpStatus.OK);
     }
 
     @GetMapping(path = "/open")
-    public List<ToDo> getAllOpenTodo(){
-        return this.getToDoServiceImpl().getOpenToDo();
+    public ResponseEntity<List<ToDo>> getAllOpenTodo(){
+//        return this.getToDoServiceImpl().getOpenToDo();
+        return new ResponseEntity<>(this.getToDoServiceImpl().getOpenToDo(), HttpStatus.OK);
     }
 
     @GetMapping(path = "/numfinished")
-    public Long getNumOfFinishedTodo(){
-        return this.getToDoServiceImpl().getNumOfFinishedToDo();
+    public ResponseEntity<Long> getNumOfFinishedTodo(){
+        return new ResponseEntity<>(this.getToDoServiceImpl().getNumOfFinishedToDo(), HttpStatus.OK);
+//        return this.getToDoServiceImpl().getNumOfFinishedToDo();
     }
 
     @GetMapping(path = "/numopen")
-    public Long getNumOfOpenTodo(){
-        return this.getToDoServiceImpl().getNumOfOpenToDo();
+    public ResponseEntity<Long> getNumOfOpenTodo(){
+        return new ResponseEntity<>(this.getToDoServiceImpl().getNumOfOpenToDo(), HttpStatus.OK);
     }
 }
