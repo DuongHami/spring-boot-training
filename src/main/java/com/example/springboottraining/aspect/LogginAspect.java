@@ -1,7 +1,9 @@
 package com.example.springboottraining.aspect;
 
 import lombok.extern.java.Log;
+import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
+import org.aspectj.lang.annotation.Before;
 import org.slf4j.Logger;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -12,11 +14,23 @@ import org.springframework.stereotype.Component;
 @Component
 public class LogginAspect {
 
+//    @Before("within(com.example.springboottraining..*) && (bean(*Controller) || bean(*Service) || bean(Repository))")
+//    public void beforeMeasure(JoinPoint joinPoint) {
+//        log.info("Before method execution " + joinPoint.getSignature().getName());
+//    }
+
     @Around("execution(* com.example.springboottraining.controller.ToDoController.*(..))")
     public Object aroundTodoController(ProceedingJoinPoint joinPoint) throws Throwable {
         log.info("Before method execution [controller] " + joinPoint.getSignature().getName());
+        long start = System.currentTimeMillis();
         Object res = joinPoint.proceed();
         log.info("After method execution [controller] " + joinPoint.getSignature().getName());
+        long end = System.currentTimeMillis();
+
+        String className = joinPoint.getTarget().getClass().getName();
+        String methodName = joinPoint.getSignature().getName();
+        long difference = end - start;
+        log.info(String.format("Class: %s, Method: %s, Difference: %d ms", className, methodName, difference));
         return res;
     }
 

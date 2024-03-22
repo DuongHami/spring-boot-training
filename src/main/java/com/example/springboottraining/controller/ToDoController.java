@@ -30,18 +30,18 @@ public class ToDoController {
      * @param newToDo the ToDo object to be created
      */
     @PostMapping
-    public ResponseEntity<Object> postToDO(@Valid @RequestBody ToDoCreateDTO newToDo){
-        this.getToDoServiceImpl().createToDo(this.getModelMapper().map(newToDo, ToDo.class));
-        return new ResponseEntity<>(HttpStatus.CREATED);
+    public ResponseEntity<Boolean> postToDO(@Valid @RequestBody ToDoCreateDTO newToDo){
+        Boolean response = this.getToDoServiceImpl().createToDo(this.getModelMapper().map(newToDo, ToDo.class));
+        return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
     /**
      * Update a ToDo
      */
     @PutMapping
-    public ResponseEntity<Object> putToDo(@Valid @RequestBody ToDoUpdateDTO newToDo){
-        this.getToDoServiceImpl().updateToDo(this.getModelMapper().map(newToDo, ToDo.class));
-        return new ResponseEntity<>(HttpStatus.OK);
+    public ResponseEntity<ToDo> putToDo(@Valid @RequestBody ToDoUpdateDTO newToDo){
+        ToDo response = this.getToDoServiceImpl().updateToDo(this.getModelMapper().map(newToDo, ToDo.class));
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     /**

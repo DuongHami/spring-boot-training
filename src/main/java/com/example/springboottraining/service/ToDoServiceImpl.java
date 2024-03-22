@@ -23,12 +23,17 @@ public class ToDoServiceImpl implements ToDoService{
 //    private final MessageSource messageSource;
 
     @Override
-    public void createToDo(ToDo obj) {
-        this.getToDoRepository().save(obj);
+    public Boolean createToDo(ToDo obj) {
+        try{
+            ToDo newtodo = this.getToDoRepository().save(obj);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
     }
 
     @Override
-    public void updateToDo(ToDo obj) {
+    public ToDo updateToDo(ToDo obj) {
         if(this.getToDoRepository().existsById(obj.getId())){
             ToDo newToDo = this.getToDoRepository().findById(obj.getId()).get();
             newToDo.setCompleted(obj.getCompleted());
@@ -37,6 +42,7 @@ public class ToDoServiceImpl implements ToDoService{
             newToDo.setId(obj.getId());
             this.getToDoRepository().save(newToDo);
         }
+        return obj;
     }
 
     @Override
