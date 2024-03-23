@@ -18,6 +18,6 @@ public class ToDoCreateDTO {
     @Size(min = 1, max = 255)
     private String description;
 
-    @NotNull
-    private Boolean completed;
+//    @NotNull
+//    private Boolean completed;
 }

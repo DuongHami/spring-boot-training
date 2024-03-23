@@ -33,7 +33,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class ToDoControllerTest {
 
     @Autowired
-    private MockMvc mvc ;
+    private MockMvc mvc;
 
     @Autowired
     private ObjectMapper objectMapper;
@@ -81,7 +81,7 @@ public class ToDoControllerTest {
 
         mvc.perform(delete("/todo/{id}", 1L)
                         .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isNoContent());
+                    .andExpect(status().isNoContent());
 
     }
 

@@ -20,7 +20,6 @@ import java.util.Optional;
 public class ToDoServiceImpl implements ToDoService{
 
     private final ToDoRepository toDoRepository;
-//    private final MessageSource messageSource;
 
     @Override
     public Boolean createToDo(ToDo obj) {
@@ -66,7 +65,7 @@ public class ToDoServiceImpl implements ToDoService{
 //        );
 
         return this.getToDoRepository().findById(id).orElseThrow(
-                () -> new ToDoNotFoundException("")
+                () -> new EntityNotFoundException("")
         );
     }
 

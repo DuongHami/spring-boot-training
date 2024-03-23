@@ -9,14 +9,14 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 public class ToDoReadDTO {
-    @NotBlank
-    @Size(min = 5, max = 255)
+//    @NotBlank
+//    @Size(min = 5, max = 255)
     private String taskname;
 
-    @NotBlank
-    @Size(min = 1, max = 255)
+//    @NotBlank
+//    @Size(min = 1, max = 255)
     private String description;
-
-    @NotNull
+//
+//    @NotNull
     private Boolean completed;
 }

@@ -23,6 +23,7 @@ import java.util.List;
 public class ToDoController {
 
     private final ToDoServiceImpl toDoServiceImpl;
+
     private final ModelMapper modelMapper;
 
     /**
@@ -31,7 +32,7 @@ public class ToDoController {
      */
     @PostMapping
     public ResponseEntity<Boolean> postToDO(@Valid @RequestBody ToDoCreateDTO newToDo){
-        Boolean response = this.getToDoServiceImpl().createToDo(this.getModelMapper().map(newToDo, ToDo.class));
+        Boolean response = this.toDoServiceImpl.createToDo(this.modelMapper.map(newToDo, ToDo.class));
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 

@@ -24,9 +24,6 @@ public class ToDo {
 
     private String description;
 
-//    @Column(nullable = false)
-//    private Date dueDate;
-
-    private Boolean completed;
+    private Boolean completed = false;
 
 }
