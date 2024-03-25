@@ -11,6 +11,9 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -24,6 +27,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -90,7 +94,7 @@ public class ToDoControllerTest {
 
         when(service.getToDoById(1L)).thenReturn(t1);
 
-        mvc.perform(get("/todo/{id}", 1L))
+        mvc.perform(get("/todo/{id}", 1L).with(user("user")))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.id", is(1)));
@@ -100,6 +104,13 @@ public class ToDoControllerTest {
     }
 
     @Test
+    public void getToDoUnautherized() throws Exception {
+        when(service.getToDoById(1L)).thenReturn(t1);
+        mvc.perform(get("/todo/{id}", 1L)).andExpect(status().isUnauthorized());
+    }
+
+    @Test
+    @WithMockUser
     public void getToDoByIdError() throws Exception {
         when(service.getToDoById(100L)).thenThrow(ToDoNotFoundException.class);
 
@@ -114,13 +125,14 @@ public class ToDoControllerTest {
     public void getAllTodo() throws Exception {
         when(service.getAllToDo()).thenReturn(all);
 
-        mvc.perform(get("/todo/all")
+        mvc.perform(get("/todo/all").with(user("hw"))
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(all)))
                 .andExpect(status().isOk());
     }
 
     @Test
+    @WithMockUser(roles="HELLO_WORLD")
     public void getOpenTodo() throws Exception {
         when(service.getOpenToDo()).thenReturn(open);
 
@@ -134,6 +146,7 @@ public class ToDoControllerTest {
     }
 
     @Test
+    @WithMockUser
     public void getFinishedTodo() throws Exception {
 //        List<ToDo> open = Arrays.asList(t1, t2);
         when(service.getFinishedToDo()).thenReturn(finished);
@@ -148,6 +161,7 @@ public class ToDoControllerTest {
     }
 
     @Test
+    @WithMockUser
     public void numFinished() throws Exception{
         when(service.getNumOfFinishedToDo()).thenReturn(5L);
 
@@ -160,6 +174,7 @@ public class ToDoControllerTest {
     }
 
     @Test
+    @WithMockUser
     public void numOpen() throws Exception{
         when(service.getNumOfOpenToDo()).thenReturn(10L);
 
@@ -169,6 +184,11 @@ public class ToDoControllerTest {
                 .andExpect(jsonPath("$", is(10)));
 
         verify(service, times(1)).getNumOfOpenToDo();
+    }
+
+    @Test
+    public void helloWorldPage() throws Exception {
+        mvc.perform(get("/helloWorld.index"));
     }
 
 }
