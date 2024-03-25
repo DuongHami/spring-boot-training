@@ -93,4 +93,7 @@ public class ToDoServiceImpl implements ToDoService{
     public Long getNumOfFinishedToDo() {
         return this.getToDoRepository().countAllByCompletedIsTrue();
     }
+    public Long getNumOfToDo() {
+        return this.getToDoRepository().count();
+    }
 }

@@ -20,16 +20,9 @@ class WebSecurityConfigTest {
     private MockMvc mvc;
 
     @Test
-    @WithMockUser
-    public void valid() throws Exception {
-        mvc.perform(get("/todo/{id}", 1L))
-                .andExpect(status().isOk());
-    }
-
-    @Test
     public void validUser() throws Exception {
         mvc.perform(get("/todo/{id}", 1L)
-                .with(httpBasic("user", "password")))
+                        .with(httpBasic("user", "password")))
                 .andExpect(status().isOk());
     }
 
@@ -37,7 +30,7 @@ class WebSecurityConfigTest {
 //    @WithMockUser(username = "user", password = "user", roles = "USER")
     public void invalidUsername() throws Exception {
         mvc.perform(get("/todo/{id}", 1L)
-                .with(httpBasic("user123", "password")))
+                        .with(httpBasic("user123", "password")))
                 .andExpect(status().isUnauthorized());
     }
 

@@ -1,0 +1,8 @@
+package com.example.springboottraining.enums;
+
+public enum Right {
+    TODO_CREATE, TODO_UPDATE, TODO_DELETE,
+    TODO_READ, TODO_READ_ALL, TODO_READ_OPEN, TODO_READ_FINISHED,
+    TODO_READ_COUNT, TODO_READ_COUNT_OPEN, TODO_READ_COUNT_FINISHED
+
+}
