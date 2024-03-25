@@ -1,5 +1,9 @@
 package com.example.springboottraining.controller;
 
+import com.example.springboottraining.annotation.IsAllowedToCreate;
+import com.example.springboottraining.annotation.IsAllowedToDelete;
+import com.example.springboottraining.annotation.IsAllowedToRead;
+import com.example.springboottraining.annotation.IsAllowedToUpdate;
 import com.example.springboottraining.dto.ToDoCreateDTO;
 import com.example.springboottraining.dto.ToDoDeleteDTO;
 import com.example.springboottraining.dto.ToDoUpdateDTO;
@@ -35,7 +39,7 @@ public class ToDoController {
      * @param newToDo the ToDo object to be created
      */
     @PostMapping
-    @PreAuthorize("hasRole('TODO_CREATE')")
+    @IsAllowedToCreate
     public ResponseEntity<Boolean> postToDO(@Valid @RequestBody ToDoCreateDTO newToDo){
         Boolean response = this.toDoServiceImpl.createToDo(this.modelMapper.map(newToDo, ToDo.class));
         return new ResponseEntity<>(response, HttpStatus.CREATED);
@@ -45,7 +49,7 @@ public class ToDoController {
      * Update a ToDo
      */
     @PutMapping
-    @PreAuthorize("hasRole('TODO_UPDATE')")
+    @IsAllowedToUpdate
     public ResponseEntity<ToDo> putToDo(@Valid @RequestBody ToDoUpdateDTO newToDo){
         ToDo response = this.getToDoServiceImpl().updateToDo(this.getModelMapper().map(newToDo, ToDo.class));
         return new ResponseEntity<>(response, HttpStatus.OK);
@@ -55,21 +59,21 @@ public class ToDoController {
      * Delete a ToDo
      */
     @DeleteMapping
-    @PreAuthorize("hasRole('TODO_DELETE')")
+    @IsAllowedToDelete
     public ResponseEntity<Void> deleteToDo(@Valid @RequestBody ToDoDeleteDTO newToDo){
         this.getToDoServiceImpl().deleteToDo(this.getModelMapper().map(newToDo, ToDo.class));
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @DeleteMapping("/{id}")
-    @PreAuthorize("hasRole('TODO_DELETE')")
+    @IsAllowedToDelete
     public ResponseEntity<Void> deleteToDoById(@PathVariable Long id){
         this.getToDoServiceImpl().deleteToDoById(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @GetMapping("/{id}")
-    @PreAuthorize("hasRole('TODO_READ')")
+    @IsAllowedToRead
     public ResponseEntity<ToDo> getToDoById(@PathVariable Long id){
         return new ResponseEntity<>(this.getToDoServiceImpl().getToDoById(id), HttpStatus.OK);
     }

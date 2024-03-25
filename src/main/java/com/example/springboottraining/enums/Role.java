@@ -29,7 +29,8 @@ public enum Role {
             Right.TODO_READ_FINISHED,
             Right.TODO_READ_OPEN,
             Right.TODO_CREATE,
-            Right.TODO_UPDATE
+            Right.TODO_UPDATE,
+            Right.TODO_DELETE
             //USER LESEN UND SCHREIBEN
     ),
     ANALYST(

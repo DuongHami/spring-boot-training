@@ -23,6 +23,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.util.matcher.RequestMatcher;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 
 import java.io.IOException;
 import java.util.List;
@@ -32,7 +33,7 @@ import static org.springframework.security.config.Customizer.withDefaults;
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
-@EnableGlobalMethodSecurity(prePostEnabled = true)
+@EnableMethodSecurity
 public class WebSecurityConfig {
 
     private final PasswordEncoder passwordEncoder;
@@ -40,11 +41,11 @@ public class WebSecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-//                .cors(Customizer,)
-//                .csrf(AbstractHttpConfigurer::disable)
+                .cors(Customizer.withDefaults())
+                .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests((authentication) -> authentication
                         .requestMatchers("/", "index.html").permitAll()
-                        .requestMatchers("helloWorld.html").hasRole("HELLO_WORLD")
+                        .requestMatchers("/todo/all").hasRole("TODO_READ_ALL")
                         .anyRequest().authenticated()
                 ).httpBasic(withDefaults());;
         return http.build();
