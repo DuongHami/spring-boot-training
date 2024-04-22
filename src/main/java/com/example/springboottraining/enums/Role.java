@@ -22,8 +22,8 @@ public enum Role {
             Right.TODO_UPDATE),
     ADMIN(
             Right.TODO_READ,
-//            Right.TODO_READ_ALL,
-//            Right.TODO_READ_COUNT,
+            Right.TODO_READ_ALL,
+            Right.TODO_READ_COUNT,
             Right.TODO_READ_COUNT_FINISHED,
             Right.TODO_READ_COUNT_OPEN,
             Right.TODO_READ_FINISHED,

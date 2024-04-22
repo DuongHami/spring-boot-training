@@ -21,11 +21,11 @@ public class DatabasePopulator implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        ToDo t1 = new ToDo(0L, "Clean up room", "A", true);
-        ToDo t2 = new ToDo(0L, "Go out with the dog", "B", true);
-        ToDo t3 = new ToDo(0L, "Cook lunch", "C", false);
-        ToDo t4 = new ToDo(0L, "Buy groceries", "D", false);
-        ToDo t5 = new ToDo(0L, "Wash dishes", "E", false);
+        ToDo t1 = new ToDo(0L, "Clean up room", "vacuum, change sheets", true);
+        ToDo t2 = new ToDo(0L, "Go out with the dog", "with Dominica", true);
+        ToDo t3 = new ToDo(0L, "Cook lunch", "Vegetable Stir Fry", false);
+        ToDo t4 = new ToDo(0L, "Buy groceries", "2x Orange, 3 Milk", false);
+        ToDo t5 = new ToDo(0L, "Wash dishes", "BlaBlaBlaBlaBlaBla", false);
 
         ToDo t6 = new ToDo(0L, "Testing", "F", false);
         ToDo t3new = new ToDo(3L, "Cook lunch", "C", true);

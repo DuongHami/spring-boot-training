@@ -28,6 +28,7 @@ import java.util.List;
 @Getter
 @RequiredArgsConstructor
 @RequestMapping("/todo")
+@CrossOrigin
 public class ToDoController {
 
     private final ToDoServiceImpl toDoServiceImpl;
